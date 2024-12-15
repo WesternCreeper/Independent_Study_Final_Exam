@@ -64,6 +64,14 @@ public class MainPane extends JPanel
         g3.draw(exitButton);
     }
     
+    public void setUp()
+    {
+        cardGameButton.setShown(true);
+        mazeButton.setShown(true);
+        memoryButton.setShown(true);
+        exitButton.setShown(true);
+    }
+    
     private class CardGameListener extends WGButtonListener
     {
         public void clickEvent(MouseEvent e)

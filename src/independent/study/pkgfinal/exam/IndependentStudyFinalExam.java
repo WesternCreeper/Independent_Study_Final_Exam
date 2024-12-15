@@ -21,6 +21,10 @@ public class IndependentStudyFinalExam
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static JFrame mainFrame = new JFrame();
     private static JPanel paneOwner;
+    private static MainPane menu;
+    private static CardGamePane card;
+    private static MazeGamePane maze;
+    private static MemoryGamePane memory;
     private static CardLayout paneHolder = new CardLayout();
     /**
      * @param args the command line arguments
@@ -38,6 +42,15 @@ public class IndependentStudyFinalExam
     public static void goTo(String screen)
     {
         paneHolder.show(paneOwner, screen);
+        switch(screen)
+        {
+            case "Menu":
+                menu.setUp();
+                break;
+            case "Simple Maze Game":
+                maze.setUp();
+                break;
+        }
     }
     
     private static class Initializer implements Runnable
@@ -63,19 +76,19 @@ public class IndependentStudyFinalExam
                 mainFrame.add(paneOwner);
                 
                 //The main menu pane:
-                MainPane menu = new MainPane();
+                menu = new MainPane();
                 paneOwner.add(menu, "Menu");
                 
                 //The main menu pane:
-                CardGamePane card = new CardGamePane();
+                card = new CardGamePane();
                 paneOwner.add(card, "Card Game");
                 
                 //The main menu pane:
-                MazeGamePane maze = new MazeGamePane();
+                maze = new MazeGamePane();
                 paneOwner.add(maze, "Simple Maze Game");
                 
                 //The main menu pane:
-                MemoryGamePane memory = new MemoryGamePane();
+                memory = new MemoryGamePane();
                 paneOwner.add(memory, "Memory Game");
                 
                 paneHolder.show(paneOwner, "Menu");
