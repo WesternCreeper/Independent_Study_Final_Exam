@@ -50,6 +50,9 @@ public class IndependentStudyFinalExam
             case "Simple Maze Game":
                 maze.setUp();
                 break;
+            case "Memory Game":
+                memory.setUp();
+                break;
         }
     }
     
