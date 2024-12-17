@@ -53,6 +53,9 @@ public class IndependentStudyFinalExam
             case "Memory Game":
                 memory.setUp();
                 break;
+            case "Card Game":
+                card.setUp();
+                break;
         }
     }
     
