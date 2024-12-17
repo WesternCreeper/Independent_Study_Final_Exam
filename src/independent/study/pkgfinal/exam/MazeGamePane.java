@@ -25,16 +25,18 @@ import javax.swing.JPanel;
 public class MazeGamePane extends JPanel 
 {
     //Game:
+    private final int hintThreshold = 50;
     private MazeBinaryTree maze = new MazeBinaryTree();
     private int points = -1;
     
     //Graphics:
-    private Color[] backgroundColors = {new Color(50, 98, 140), new Color(85, 113, 138), new Color(111, 112, 112)};
+    private Color[] backgroundColors = {new Color(50, 98, 140), new Color(85, 113, 138), new Color(111, 112, 112), new Color(140, 127, 50)};
     private WGTheme uiTheme;
     private WGButton leftOptionButton;
     private WGButton rightOptionButton;
     private WGButton startButton;
     private WGButton backButton;
+    private WGButton hintButton;
     private WGLabel winLabel;
     private WGLabel pointsLabel;
     public MazeGamePane()
@@ -49,6 +51,7 @@ public class MazeGamePane extends JPanel
             rightOptionButton = new WGButton(new Rectangle2D.Double(0.55, 0.1, 0.25, 0.8), "", this, new RightOptionListener(), uiTheme);
             startButton = new WGButton(new Rectangle2D.Double(0.4, 0.4, 0.2, 0.2), "Start!", this, new StartListener(), uiTheme);
             backButton = new WGButton(new Rectangle2D.Double(0.9, 0.9, 0.1, 0.1), "Back", this, new BackListener(), uiTheme);
+            hintButton = new WGButton(new Rectangle2D.Double(0, 0, 0.1, 0.1), "Hint", this, new HintListener(), uiTheme);
         }
         catch(WGNullParentException e) { } //Will never happen, we supply a proper parent
     }
@@ -70,6 +73,7 @@ public class MazeGamePane extends JPanel
         g3.draw(backButton);
         g3.draw(winLabel);
         g3.draw(pointsLabel);
+        g3.draw(hintButton);
     }
     
     public void setUp()
@@ -81,6 +85,7 @@ public class MazeGamePane extends JPanel
         rightOptionButton.setShown(false);
         pointsLabel.setShown(false);
         winLabel.setShown(false);
+        hintButton.setShown(false);
     }
     
     private void setNames()
@@ -93,6 +98,10 @@ public class MazeGamePane extends JPanel
         //Update points:
         points++;
         pointsLabel.setText("Points: " + points);
+        if(points >= hintThreshold)
+        {
+            hintButton.setShown(true);
+        }
     }
     
     private class LeftOptionListener extends WGButtonListener
@@ -162,6 +171,18 @@ public class MazeGamePane extends JPanel
             maze.generateMap();
             
             //Now name the options:
+            setNames();
+        }
+    }
+    
+    private class HintListener extends WGButtonListener
+    {
+        public void clickEvent(MouseEvent e)
+        {
+            //This will just give the path away for free, so your points must be pretty large for this button to even appear...
+            
+            //Anyway give the path away:
+            maze.showPath();
             setNames();
         }
     }

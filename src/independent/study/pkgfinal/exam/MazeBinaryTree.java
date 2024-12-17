@@ -206,11 +206,6 @@ public class MazeBinaryTree
                 {
                     current = current.getLeft();
                 }
-                else if(current.getRight().getObject().equals(tileNames[0]))
-                {
-                    current = current.getRight();
-                    break;
-                }
                 else
                 {
                     break;
@@ -221,11 +216,6 @@ public class MazeBinaryTree
                 if(current.getRight() != null && !current.getRight().getObject().equals(tileNames[0]))
                 {
                     current = current.getRight();
-                }
-                else if(current.getLeft().getObject().equals(tileNames[0]))
-                {
-                    current = current.getLeft();
-                    break;
                 }
                 else
                 {
@@ -291,10 +281,38 @@ public class MazeBinaryTree
         {
             return false;
         }
-        if(((String)node.getObject()).equals("Exit"))
+        if(((String)node.getObject()).equals(tileNames[1]))
         {
             return true;
         }
         return recursiveCheckMap(node.getLeft()) || recursiveCheckMap(node.getRight());
+    }
+    
+    public void showPath()
+    {
+        //Find the path to the exit:
+        recursiveLightMap(root);
+    }
+    private boolean recursiveLightMap(BinaryNode node)
+    {
+        if(node == null)
+        {
+            return false;
+        }
+        if(((String)node.getObject()).equals(tileNames[1]))
+        {
+            node.setAmountOfUse(3);
+            return true;
+        }
+        
+        //Now the lighting:
+        boolean leftAnswer = recursiveLightMap(node.getLeft());
+        boolean rightAnswer = recursiveLightMap(node.getRight());
+        if(leftAnswer || rightAnswer)
+        {
+            node.setAmountOfUse(3);
+            return true;
+        }
+        return false;
     }
 }
